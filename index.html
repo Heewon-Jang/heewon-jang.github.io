@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heewon Jang Portfolio</title>
+    <meta name="description" content="Heewon Jang — Computer Science student at Columbia University focused on marketing and business analysis.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fffafa;
+            --surface: #ffffff;
+            --surface-alt: #fef2f2;
+            --border: #fecaca;
+            --text: #1c0a0a;
+            --muted: #7f5a5a;
+            --accent: #dc2626;
+            --accent-strong: #b91c1c;
+            --accent-soft: #fee2e2;
+            --on-accent: #ffffff;
+            --stage: #fde8e8;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0c0505;
+                --surface: #170909;
+                --surface-alt: #1f0c0c;
+                --border: #3f1616;
+                --text: #fdf2f2;
+                --muted: #c9a3a3;
+                --accent: #ef4444;
+                --accent-strong: #f87171;
+                --accent-soft: #3a1111;
+                --on-accent: #ffffff;
+                --stage: #120707;
+            }
+        }
+        :root[data-theme="dark"] {
+            --bg: #0c0505;
+            --surface: #170909;
+            --surface-alt: #1f0c0c;
+            --border: #3f1616;
+            --text: #fdf2f2;
+            --muted: #c9a3a3;
+            --accent: #ef4444;
+            --accent-strong: #f87171;
+            --accent-soft: #3a1111;
+            --on-accent: #ffffff;
+            --stage: #120707;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+        html, body { margin: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; }
+        button, input, textarea { font: inherit; color: inherit; }
+        button { cursor: pointer; }
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+        /* Header */
+        header {
+            position: sticky; top: 0; z-index: 10;
+            background: #b91c1c; color: #fff;
+        }
+        .header-inner { height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .brand { font-weight: 800; font-size: 16px; text-decoration: none; white-space: nowrap; }
+        .brand span { color: #fecaca; font-weight: 600; }
+        .nav { display: flex; gap: 4px; overflow-x: auto; min-width: 0; scrollbar-width: none; }
+        .nav a {
+            text-decoration: none; padding: 8px 12px; border-radius: 8px;
+            font-size: 14px; font-weight: 600; color: #fee2e2; white-space: nowrap;
+        }
+        .nav a:hover { color: #fff; background: rgba(255,255,255,.15); }
+        .theme-btn { background: none; color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: 8px; padding: 6px 10px; flex: 0 0 auto; }
+
+        /* Sections */
+        section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+        section:nth-of-type(even) { background: var(--surface-alt); }
+        .eyebrow { color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .12em; margin: 0 0 8px; }
+        h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin: 0 0 32px; letter-spacing: -.02em; }
+        h2::after { content: ''; display: block; width: 48px; height: 4px; background: var(--accent); border-radius: 2px; margin-top: 12px; }
+        h3 { margin: 0; }
+        .placeholder {
+            border: 2px dashed var(--border); border-radius: 12px; color: var(--muted);
+            text-align: center; padding: 32px 16px; font-size: 14px; line-height: 1.7;
+        }
+        .placeholder strong { display: block; color: var(--text); font-size: 16px; margin-bottom: 4px; }
+        code { background: var(--accent-soft); border-radius: 4px; padding: 1px 6px; font-size: .9em; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+            background: var(--accent); color: var(--on-accent); border: 0; border-radius: 8px;
+            padding: 10px 18px; font-size: 14px; font-weight: 700;
+        }
+        .btn:hover { background: var(--accent-strong); }
+        .btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+        .btn-ghost:hover { background: var(--accent-soft); }
+
+        /* About */
+        #about { padding: 96px 0; }
+        .about-hi { font-size: clamp(36px, 6vw, 64px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; margin: 0 0 24px; }
+        .about-hi span { color: var(--accent); }
+        .about-intro { font-size: clamp(17px, 2vw, 20px); color: var(--muted); line-height: 1.7; max-width: 720px; margin: 0 0 32px; }
+        .about-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        /* Case studies */
+        .case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .case-card {
+            display: flex; flex-direction: column; text-align: left; padding: 0;
+            background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            transition: transform .2s, border-color .2s, box-shadow .2s;
+        }
+        .case-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 28px -12px rgba(220, 38, 38, .35); }
+        .case-cover {
+            position: relative; aspect-ratio: 16 / 9; background: var(--stage); overflow: hidden;
+            display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+        .case-cover canvas, .case-cover img, .case-cover iframe { width: 100%; height: 100%; object-fit: cover; object-position: top; border: 0; display: block; }
+        .case-cover iframe { pointer-events: none; }
+        .case-body { padding: 18px 20px 22px; }
+        .case-tag { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+        .case-title { font-size: 19px; font-weight: 800; line-height: 1.35; }
+        .case-desc { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 8px 0 0; }
+        .case-more { margin-top: 14px; font-size: 14px; font-weight: 700; color: var(--accent); }
+
+        /* PDF modal */
+        dialog {
+            width: min(1100px, 100vw - 32px); height: min(90vh, 900px); padding: 0;
+            border: 1px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text);
+        }
+        dialog::backdrop { background: rgba(12, 5, 5, .7); }
+        .modal { display: flex; flex-direction: column; height: 100%; }
+        .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        .modal-head h3 { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .modal-actions { display: flex; gap: 8px; flex: 0 0 auto; }
+        .modal-actions .btn { padding: 6px 12px; }
+        .modal iframe { flex: 1; width: 100%; border: 0; background: var(--stage); }
+
+        /* Resume */
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 40px; }
+        .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .stat-value { font-size: 32px; font-weight: 800; color: var(--accent); letter-spacing: -.02em; }
+        .stat-label { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+        .resume-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 40px; }
+        .resume-block h3 { font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+        .resume-block + .resume-block { margin-top: 32px; }
+        .edu-school { font-weight: 800; font-size: 18px; }
+        .edu-meta { color: var(--muted); font-size: 14px; line-height: 1.7; margin-top: 4px; }
+
+        .timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border); }
+        .timeline li { position: relative; padding: 0 0 24px 24px; }
+        .timeline li:last-child { padding-bottom: 0; }
+        .timeline li::before {
+            content: ''; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px;
+            border-radius: 50%; background: var(--accent); border: 2px solid var(--bg);
+        }
+        .tl-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .tl-org { font-weight: 800; }
+        .tl-date { font-size: 13px; color: var(--muted); }
+        .tl-role { color: var(--accent); font-size: 14px; font-weight: 600; margin-top: 2px; }
+        .tl-desc { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 6px 0 0; }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { background: var(--accent-soft); border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 600; }
+        .resume-cta { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+        /* Contact */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; align-items: start; }
+        .contact-lead { color: var(--muted); line-height: 1.7; margin: 0 0 24px; }
+        .email-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .email-label { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+        .email-value { display: block; margin: 6px 0 16px; font-weight: 700; font-size: 18px; word-break: break-all; text-decoration: none; }
+        .email-value:hover { color: var(--accent); }
+        .email-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .mail-form { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: grid; gap: 16px; }
+        .mail-form label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; }
+        .mail-form input, .mail-form textarea {
+            width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+            background: var(--bg); font-size: 15px;
+        }
+        .mail-form input:focus, .mail-form textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+        .mail-form textarea { min-height: 140px; resize: vertical; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-note { font-size: 12px; color: var(--muted); margin: 0; }
+
+        footer { padding: 32px 0; text-align: center; color: var(--muted); font-size: 13px; }
+
+        @media (max-width: 860px) {
+            .resume-grid, .contact-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .brand span { display: none; }
+            .nav a { padding: 8px 6px; font-size: 13px; }
+            .nav a[href="#about"] { display: none; }
+            .case-grid { grid-template-columns: 1fr; }
+            .row { grid-template-columns: 1fr; }
+            section { padding: 56px 0; }
+            #about { padding: 64px 0; }
+            dialog { width: 100vw; height: 100dvh; max-width: none; max-height: none; border-radius: 0; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="wrap header-inner">
+            <a href="#about" class="brand">Heewon Jang <span>Portfolio</span></a>
+            <nav class="nav">
+                <a href="#about">About</a>
+                <a href="#case-studies">Case Studies</a>
+                <a href="#resume">Resume</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">◐</button>
+        </div>
+    </header>
+
+    <!-- ABOUT ME -->
+    <section id="about">
+        <div class="wrap">
+            <p class="eyebrow">01 · ABOUT ME</p>
+            <h1 class="about-hi">Hi, I'm <span>Heewon Jang</span>.</h1>
+            <p class="about-intro">I’m a Computer Science student at Columbia University with an interest in marketing and business analysis.</p>
+            <div class="about-actions">
+                <a class="btn" href="#case-studies">View Case Studies</a>
+                <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="case-studies">
+        <div class="wrap">
+            <p class="eyebrow">02</p>
+            <h2>Case Studies</h2>
+            <div class="case-grid" id="caseGrid"></div>
+        </div>
+    </section>
+
+    <!-- RESUME -->
+    <section id="resume">
+        <div class="wrap">
+            <p class="eyebrow">03</p>
+            <h2>Resume</h2>
+
+            <div class="stats">
+                <div class="stat"><div class="stat-value">3.62x</div><div class="stat-label">ROAS on $66K+ media spend ($239K+ attributed revenue)</div></div>
+                <div class="stat"><div class="stat-value">$506K+</div><div class="stat-label">Attributed revenue from 43 email/SMS campaigns &amp; 12 automated flows</div></div>
+                <div class="stat"><div class="stat-value">60+</div><div class="stat-label">Ad variations optimized through A/B testing</div></div>
+                <div class="stat"><div class="stat-value">350+</div><div class="stat-label">Retail locations supported with marketing operations</div></div>
+            </div>
+
+            <div class="resume-grid">
+                <div>
+                    <div class="resume-block">
+                        <h3>Education</h3>
+                        <div class="edu-school">Columbia University</div>
+                        <div class="edu-meta">
+                            B.A. in Computer Science · Expected May 2027<br>
+                            GPA 3.9 / 4.0 · Dean's List<br>
+                            William Strong Scholarship Fund Recipient
+                        </div>
+                    </div>
+                    <div class="resume-block">
+                        <h3>Skills</h3>
+                        <div class="chips">
+                            <span class="chip">GA4</span><span class="chip">Google Ads</span><span class="chip">Meta Ads</span>
+                            <span class="chip">Shopify</span><span class="chip">Klaviyo</span><span class="chip">SEO / GEO</span>
+                            <span class="chip">A/B Testing</span><span class="chip">Python</span><span class="chip">SQL</span>
+                            <span class="chip">Tableau</span><span class="chip">Excel</span><span class="chip">Figma</span>
+                            <span class="chip">Premiere Pro</span>
+                        </div>
+                    </div>
+                    <div class="resume-block">
+                        <h3>Certifications</h3>
+                        <div class="edu-meta">
+                            IBM Machine Learning with Python (2025)<br>
+                            Amazon Campus Prep Series (2025)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resume-block">
+                    <h3>Experience</h3>
+                    <ul class="timeline">
+                        <li>
+                            <div class="tl-head"><span class="tl-org">MADUP</span><span class="tl-date">Mar 2026 – Aug 2026</span></div>
+                            <div class="tl-role">Global Performance Marketing Intern</div>
+                            <p class="tl-desc">Analyzed performance across GA4, Google Ads, Meta, and Shopify, ran A/B tests, drove SEO/GEO improvements for AI search visibility, and managed lifecycle email/SMS programs.</p>
+                        </li>
+                        <li>
+                            <div class="tl-head"><span class="tl-org">Columbia University Student Council (GSSC)</span><span class="tl-date">Oct 2025 – Oct 2026</span></div>
+                            <div class="tl-role">Social Media Representative</div>
+                            <p class="tl-desc">Managed Instagram and Linktree, planned engagement campaigns, and produced event content.</p>
+                        </li>
+                        <li>
+                            <div class="tl-head"><span class="tl-org">NSF REU Research</span><span class="tl-date">Jun 2024 – Aug 2024</span></div>
+                            <div class="tl-role">Research Assistant Intern</div>
+                            <p class="tl-desc">Built an automated video-processing pipeline and a Python/Pandas dashboard for object-detection data.</p>
+                        </li>
+                        <li>
+                            <div class="tl-head"><span class="tl-org">Space Inc</span><span class="tl-date">Feb 2023 – Jan 2024</span></div>
+                            <div class="tl-role">Hospitality Marketing Coordinator</div>
+                            <p class="tl-desc">Ran paid social campaigns, content, websites, and influencer outreach across 5 hospitality venues.</p>
+                        </li>
+                        <li>
+                            <div class="tl-head"><span class="tl-org">H Mart HQ</span><span class="tl-date">Feb 2022 – Jan 2023</span></div>
+                            <div class="tl-role">Marketing Team Intern</div>
+                            <p class="tl-desc">Supported advertising across 350+ locations and 5 grand openings, and coordinated multilingual print media.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resume-cta">
+                <a class="btn" id="resumeView" target="_blank" rel="noopener">View Full Resume ↗</a>
+                <a class="btn btn-ghost" id="resumeDownload" download>Download PDF</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="wrap">
+            <p class="eyebrow">04</p>
+            <h2>Contact Me</h2>
+            <div class="contact-grid">
+                <div>
+                    <p class="contact-lead">I'd love to hear from you, whether it's about an opportunity, a project, or just to connect.</p>
+                    <div class="email-card">
+                        <div class="email-label">Email</div>
+                        <a class="email-value" id="emailLink"></a>
+                        <div class="email-actions">
+                            <a class="btn" id="emailBtn">Send Email</a>
+                            <button class="btn btn-ghost" id="copyBtn" type="button">Copy Address</button>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="mail-form" id="mailForm">
+                    <div class="row">
+                        <label>Name<input name="name" required autocomplete="name"></label>
+                        <label>Your Email<input name="from" type="email" autocomplete="email"></label>
+                    </div>
+                    <label>Subject<input name="subject" required></label>
+                    <label>Message<textarea name="message" required></textarea></label>
+                    <button class="btn" type="submit">Send Message</button>
+                    <p class="form-note">This opens your email app with the message ready to send.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>© <span id="year"></span> Heewon Jang</footer>
+
+    <dialog id="pdfModal">
+        <div class="modal">
+            <div class="modal-head">
+                <h3 id="modalTitle"></h3>
+                <div class="modal-actions">
+                    <a class="btn btn-ghost" id="modalOpen" target="_blank" rel="noopener">Open in New Tab ↗</a>
+                    <button class="btn" id="modalClose" type="button" aria-label="Close">✕</button>
+                </div>
+            </div>
+            <iframe id="modalFrame" title="Case study"></iframe>
+        </div>
+    </dialog>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        /* ================================================================
+           ✏️  EDIT HERE
+
+           Case Studies — how to add one
+           1) PowerPoint → File → Save As / Export → PDF
+           2) Put the PDF in the case-studies/ folder
+           3) Add an entry below. The first page of the PDF becomes the cover.
+              (Optional: cover: 'case-studies/cover.png' to use a custom image.)
+           ================================================================ */
+        const CASE_STUDIES = [
+            // {
+            //     title: 'Scaling Paid Social to 3.62x ROAS',
+            //     tag: 'Paid Media',
+            //     description: 'One-line summary of the project.',
+            //     pdf: 'case-studies/case-study-1.pdf',
+            // },
+        ];
+
+        const RESUME_PDF = 'Heewon Jang.pdf';
+        const EMAIL = 'heewonjang005@gmail.com';
+        /* ================================================================ */
+
+        const $ = (id) => document.getElementById(id);
+        const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+        /* ---------- Case studies ---------- */
+        const PDF_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        let workerReady = null;
+        function loadPdfWorker() {
+            // Load the worker as a same-origin blob so it also works when the page is opened as a local file
+            workerReady ??= fetch(PDF_WORKER)
+                .then((r) => r.blob())
+                .then((b) => { pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(b); });
+            return workerReady;
+        }
+        const withTimeout = (p, ms) => Promise.race([p, new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))]);
+
+        async function renderCover(el, pdfUrl) {
+            try {
+                if (!window.pdfjsLib) throw new Error('pdf.js unavailable');
+                await withTimeout(loadPdfWorker(), 8000);
+                const pdf = await withTimeout(pdfjsLib.getDocument(pdfUrl).promise, 10000);
+                const page = await pdf.getPage(1);
+                const base = page.getViewport({ scale: 1 });
+                const scale = (el.clientWidth * (window.devicePixelRatio || 1)) / base.width;
+                const viewport = page.getViewport({ scale: Math.max(scale, 1) });
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                el.replaceChildren(canvas);
+            } catch (_) {
+                // Opened as a local file, pdf.js can't read the PDF — fall back to the browser's PDF viewer
+                el.innerHTML = `<iframe src="${encodeURI(pdfUrl)}#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH" tabindex="-1" aria-hidden="true"></iframe>`;
+            }
+        }
+
+        function renderCases() {
+            const grid = $('caseGrid');
+            if (!CASE_STUDIES.length) {
+                grid.innerHTML = `<div class="placeholder" style="grid-column:1/-1"><strong>Case studies coming soon</strong>
+                    Export a PowerPoint as PDF, put it in <code>case-studies/</code>, and add it to <code>CASE_STUDIES</code>.</div>`;
+                return;
+            }
+            grid.innerHTML = '';
+            CASE_STUDIES.forEach((cs) => {
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'case-card';
+                card.innerHTML = `
+                    <div class="case-cover">${cs.cover ? `<img src="${encodeURI(cs.cover)}" alt="" loading="lazy">` : 'Loading…'}</div>
+                    <div class="case-body">
+                        ${cs.tag ? `<div class="case-tag">${esc(cs.tag)}</div>` : ''}
+                        <div class="case-title">${esc(cs.title)}</div>
+                        ${cs.description ? `<p class="case-desc">${esc(cs.description)}</p>` : ''}
+                        <div class="case-more">Read case study →</div>
+                    </div>`;
+                card.onclick = () => openPdf(cs.title, cs.pdf);
+                grid.appendChild(card);
+                if (!cs.cover) renderCover(card.querySelector('.case-cover'), cs.pdf);
+            });
+        }
+
+        function openPdf(title, url) {
+            $('modalTitle').textContent = title;
+            $('modalOpen').href = encodeURI(url);
+            $('modalFrame').src = encodeURI(url);
+            $('pdfModal').showModal();
+        }
+        function closePdf() {
+            $('pdfModal').close();
+        }
+        $('modalClose').onclick = closePdf;
+        $('pdfModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closePdf(); });
+        $('pdfModal').addEventListener('close', () => { $('modalFrame').src = 'about:blank'; });
+
+        /* ---------- Resume ---------- */
+        $('resumeView').href = encodeURI(RESUME_PDF);
+        $('resumeDownload').href = encodeURI(RESUME_PDF);
+
+        /* ---------- Contact ---------- */
+        $('emailLink').textContent = EMAIL;
+        $('emailLink').href = `mailto:${EMAIL}`;
+        $('emailBtn').href = `mailto:${EMAIL}`;
+        $('copyBtn').onclick = async () => {
+            try {
+                await navigator.clipboard.writeText(EMAIL);
+                $('copyBtn').textContent = 'Copied!';
+            } catch (_) {
+                $('copyBtn').textContent = EMAIL;
+            }
+            setTimeout(() => { $('copyBtn').textContent = 'Copy Address'; }, 2000);
+        };
+        $('mailForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const f = new FormData(e.target);
+            const body = `${f.get('message')}\n\n— ${f.get('name')}${f.get('from') ? ` (${f.get('from')})` : ''}`;
+            window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(f.get('subject'))}&body=${encodeURIComponent(body)}`;
+        });
+
+        /* ---------- Theme ---------- */
+        $('themeBtn').onclick = () => {
+            const root = document.documentElement;
+            const isDark = root.dataset.theme
+                ? root.dataset.theme === 'dark'
+                : matchMedia('(prefers-color-scheme: dark)').matches;
+            root.dataset.theme = isDark ? 'light' : 'dark';
+            try { localStorage.setItem('theme', root.dataset.theme); } catch (_) {}
+        };
+        try {
+            const saved = localStorage.getItem('theme');
+            if (saved) document.documentElement.dataset.theme = saved;
+        } catch (_) {}
+
+        $('year').textContent = new Date().getFullYear();
+        renderCases();
+    </script>
+</body>
+</html>
